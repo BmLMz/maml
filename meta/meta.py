@@ -22,7 +22,8 @@ class Meta(nn.Module):
             x_spt, x_qry, y_spt, y_qry = task
             x_spt, y_spt = x_spt.cuda(), y_spt.cuda().type(torch.int64)
             x_qry, y_qry = x_qry.cuda(), y_qry.cuda().type(torch.int64)
-
+            
+            # Using torch.higher
             with higher.innerloop_ctx(self.net, inner_opt, copy_initial_weights=False) as (fnet, diffopt):
                 for _ in range(n_inner_loop):
                     spt_logits = fnet(x_spt)
